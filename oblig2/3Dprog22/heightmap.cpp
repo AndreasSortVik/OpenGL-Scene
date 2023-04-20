@@ -15,6 +15,9 @@ HeightMap::HeightMap(const char* ImagePath)
         float yPlacement{ -7.0f }; // -5.0f
         int vert{};
 
+        width /= 2;
+        height /= 2;
+
         for (x = -height / 2; x < (height / 2); x += res) {
             for (z = -height / 2; z < (width / 2); z += res) {
 

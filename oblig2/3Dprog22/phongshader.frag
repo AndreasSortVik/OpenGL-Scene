@@ -3,8 +3,11 @@ out vec4 fragmentColour;     //color sent to fragment on screen
 
 in vec3 fragmentPosition;
 in vec3 normalTransposed;              //color received from the pipeline (and vertex shader)
+in vec2 UV;         // for textures
 
-uniform float ambientStrength = 1;
+uniform sampler2D textureSampler;
+
+uniform float ambientStrength = 0.3;
 uniform float lightStrength = 0.3;
 uniform vec3 lightPosition = vec3(0.0, 3.0, 0.0);
 uniform vec3 lightColour = vec3(0.8, 0.8, 0.3);
@@ -16,7 +19,7 @@ uniform int specularExponent = 64;
 
 void main() {
         // ambient
-        vec3 ambient = ambientStrength * lightColour;
+        vec3 ambient = ambientStrength * lightColour * objectColour;
 
         // diffuse
         vec3 normalCorrected = normalize(normalTransposed);
@@ -34,5 +37,5 @@ void main() {
         vec3 specular = spec * lightColour * specularStrength;
 
         vec3 result = ambient + diffuse + specular;
-        fragmentColour = vec4(result, 1.0);
+        fragmentColour = vec4(result, 1.0)/* * texture(textureSampler, UV)*/;
 }

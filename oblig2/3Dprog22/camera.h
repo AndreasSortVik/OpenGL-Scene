@@ -14,10 +14,10 @@ private:
 public:
    Camera();
    ~Camera() { }
-   void init(GLint pMatrixUniform, GLint vMatrixUniform);
+   void init();
    void perspective(int degrees, double aspect, double nearplane, double farplane);
    void lookAt(const QVector3D& eye, const QVector3D& at, const QVector3D& up);
-   void update();
+   void update(GLint pMatrixUniform, GLint vMatrixUniform);
 
    QMatrix4x4 mPmatrix{};         // Projection matrix
    QMatrix4x4 mVmatrix{};         // View matrix

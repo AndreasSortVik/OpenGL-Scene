@@ -68,6 +68,7 @@ private:
 
     bool keyPressed = false;
     bool cameraSwitched = false;
+    bool spacePressed = false;
 
     QOpenGLContext *mContext{nullptr};  //Our OpenGL context
     bool mInitialized{false};
@@ -122,8 +123,8 @@ private:
     GLint mCameraPositionUniform;
     GLint mSpecularStrengthUniform;
     GLint mSpecularExponentUniform;
-    GLint mLightPowerUniform;
-    GLint mTextureUniform2;
+    GLint mLightStrengthUniform;
+//    GLint mTextureUniform2;
 
 protected:
     //The QWindow that we inherit from have these functions to capture

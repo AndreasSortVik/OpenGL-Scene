@@ -6,12 +6,11 @@ Camera::Camera()
 //    mVmatrix.setToIdentity();
 }
 
-void Camera::init(GLint pMatrixUniform, GLint vMatrixUniform)
+void Camera::init()
 {
     mPmatrix.setToIdentity();
     mVmatrix.setToIdentity();
-    mPmatrixUniform = pMatrixUniform;
-    mVmatrixUniform = vMatrixUniform;
+
 }
 
 void Camera::perspective(int degrees, double aspect, double nearplane, double farplane)
@@ -24,8 +23,11 @@ void Camera::lookAt(const QVector3D &eye, const QVector3D &at, const QVector3D &
     mVmatrix.lookAt(eye, at, up);
 }
 
-void Camera::update()
+void Camera::update(GLint pMatrixUniform, GLint vMatrixUniform)
 {
+    mPmatrixUniform = pMatrixUniform;
+    mVmatrixUniform = vMatrixUniform;
+
     initializeOpenGLFunctions();
     glUniformMatrix4fv(mPmatrixUniform, 1, GL_FALSE, mPmatrix.constData());
     glUniformMatrix4fv(mVmatrixUniform, 1, GL_FALSE, mVmatrix.constData());
