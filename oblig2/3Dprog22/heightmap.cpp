@@ -15,8 +15,8 @@ HeightMap::HeightMap(const char* ImagePath)
         float yPlacement{ -7.0f }; // -5.0f
         int vert{};
 
-        width /= 2;
-        height /= 2;
+        //width /= 2;
+        //height /= 2;
 
         for (x = -height / 2; x < (height / 2); x += res) {
             for (z = -height / 2; z < (width / 2); z += res) {
@@ -83,21 +83,25 @@ float HeightMap::getHeight(QVector2D p) // Returns barycentric coordinates when 
 {
     mLogger = Logger::getInstance();
 
-    QVector2D v0;
-    QVector2D v1;
-    QVector2D v2;
+    QVector3D v0;
+    QVector3D v1;
+    QVector3D v2;
     QVector3D baryc3D{};
 
     // Loops through all triangles to find correct
     for (int i = 0; i < mVertices.size() - 2; i += 3)
     {
         // Converts position of vertex in triangle to QVector3D
-        v0 = {mVertices[i].m_xyz[0], mVertices[i].m_xyz[1]};
-        v1 = {mVertices[i + 1].m_xyz[0], mVertices[i + 1].m_xyz[1]};
-        v2 = {mVertices[i + 2].m_xyz[0], mVertices[i + 2].m_xyz[1]};
+        v0 = {mVertices[i].m_xyz[0], mVertices[i].m_xyz[1], mVertices[i].m_xyz[2]};
+        v1 = {mVertices[i + 1].m_xyz[0], mVertices[i + 1].m_xyz[1], mVertices[i + 1].m_xyz[2]};
+        v2 = {mVertices[i + 2].m_xyz[0], mVertices[i + 2].m_xyz[1], mVertices[i + 2].m_xyz[2]};
+
+        //v0 = {mVertices[i].m_xyz[0], };
+        //v1 = {mVertices[i + 1].m_xyz};
+        //v2 = {mVertices[i + 2].m_xyz};
 
         // Finds barycentric coordinates
-        baryc3D = getBarycCoordinate(v0, v1, v2, p);
+        baryc3D = getBarycCoordinate(QVector2D(v0[0], v0[2]), QVector2D(v1[0], v1[2]), QVector2D(v2[0], v2[2]), p);
 
         // All barycentric coordinates must be above or equal to 0 for player position point to be in triangle
         if (baryc3D.x() >= 0 && baryc3D.y() >= 0 && baryc3D.z() >= 0)
