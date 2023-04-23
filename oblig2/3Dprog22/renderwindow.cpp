@@ -81,9 +81,9 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
     mObjects.push_back(npc);
     npc_Curve = false;
 
-//    heightMap = new HeightMap((char*)("../3Dprog22/heightmap.png"));
+    heightMap = new HeightMap((char*)("../3Dprog22/heightmap.png"));
     //heightMap = new HeightMap((char*)("C:/Users/kmstr/Documents/GitHub/OpenGL-Scene/oblig2/3Dprog22/heightmap.png")); // Obs! Write your own directory to the image
-    heightMap = new HeightMap((char*)("C:/Users/wohal/source/repos/OpenGL-Scene/oblig2/3Dprog22/heightmap.png"));
+    //heightMap = new HeightMap((char*)("C:/Users/wohal/source/repos/OpenGL-Scene/oblig2/3Dprog22/heightmap.png"));
     heightMap->setPosition3D(QVector3D{0.0f, 0.0f,0.0f});
     mObjects.push_back(heightMap);
 
@@ -215,7 +215,8 @@ void RenderWindow::render()
     mCamera.init();
     mCamera.perspective(60, 4.0/3.0, 0.1, 1000.0);
     //mCamera.lookAt(QVector3D{6.0f, 2.5f, 6.0f}, QVector3D{0.0f, 0.0f, 0.0f}, QVector3D{0.0f, 1.0f, 0.0f});
-    mCamera.lookAt(cameraEye, mia->getPosition(), cameraUp);
+    //mCamera.lookAt(cameraEye, mia->getPosition(), cameraUp);
+    mCamera.lookAt(cameraEye, QVector3D(-7.5, 2.0f, -10), cameraUp);
 
     mTimeStart.restart(); //restart FPS clock
     mContext->makeCurrent(this); //must be called every frame (every time mContext->swapBuffers is called)
@@ -253,7 +254,7 @@ void RenderWindow::render()
         glUniform3f(mLightColorUniform, light->mLightColor.x(), light->mLightColor.y(), light->mLightColor.z());
         glUniform1f(mSpecularStrengthUniform, light->mSpecularStrength);
         //Texture
-//        glUniform1i(mTextureUniform2, 0);
+        //glUniform1i(mTextureUniform2, 0);
 
 //        // Draw (is able to draw all objects)
 //        for (auto it = mObjects.begin(); it != mObjects.end(); it++)
@@ -266,6 +267,7 @@ void RenderWindow::render()
 
         // Draw
         house->draw();
+        //heightMap->draw();
 
         // What shader to use (textureshader)
         glUseProgram(mShaderProgram[1]->getProgram());
@@ -332,6 +334,9 @@ void RenderWindow::render()
             mia->setPosition3D(QVector3D(mia->getPosition().x(), playerHeight, mia->getPosition().z()));
         }
 
+        // Light source follows player
+        light->setPosition3D(QVector3D(mia->getPosition().x(), mia->getPosition().y() + 2.5f, mia->getPosition().z()));
+
         // Checks for collisions
         for (int i = 0; i < trophies.size(); i++)
         {
@@ -347,6 +352,18 @@ void RenderWindow::render()
         }
 
     }
+
+    // Light source movement
+//    if (light)
+//    {
+//        long secElapsed = mTimeStart.nsecsElapsed();
+
+//        float light_x = 5.5f * sin(secElapsed);
+//        float light_y = 2.5f;
+//        float light_z = 5.5f * cos(secElapsed);
+
+//        light->setPosition3D(QVector3D(light_x, light_y, light_z));
+//    }
 
     //AI movement
     if (npc) {
@@ -561,7 +578,8 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     {
         if (!cameraSwitched)
         {
-            cameraEye = QVector3D{-9.9f, 2.5, -9.9f};
+            //cameraEye = QVector3D{-9.9f, 2.5, -9.9f};
+            cameraEye = QVector3D{-7.5, 3.0f, -5.1};
             cameraAt = QVector3D{-7.5f, 0.0f, -7.5f};
         }
 

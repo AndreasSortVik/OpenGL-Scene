@@ -8,8 +8,8 @@ in vec2 UV;         // for textures
 uniform sampler2D textureSampler;
 
 uniform float ambientStrength = 0.3;
-uniform float lightStrength = 0.3;
-uniform vec3 lightPosition = vec3(0.0, 3.0, 0.0);
+uniform float lightStrength = 0.5;
+uniform vec3 lightPosition = vec3(0.0f, 3.0f, 0.0f); // (0.0f, 3.0f, 0.0f), (-7.5f, 2.0f, 0.0f)
 uniform vec3 lightColour = vec3(0.8, 0.8, 0.3);
 uniform vec3 objectColour = vec3(0.7, 0.7, 0.7);
 

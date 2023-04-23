@@ -33,6 +33,7 @@ public:
 
     void rotate(GLfloat degrees);
     void setPosition3D(QVector3D inPos);
+    QVector3D getVectorNormal(Vertex p0, Vertex p1, Vertex p2);
 
     QMatrix4x4 mMatrix;
     QMatrix4x4 mPmatrix;

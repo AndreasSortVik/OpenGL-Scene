@@ -2,6 +2,7 @@
 
 House::House()
 {
+
     //     v  x    y    z     r g b     mVertices
 
     // Back wall
@@ -24,12 +25,12 @@ House::House()
 
     // Right wall
     Vertex v12{-5.0f, 0.0f, -10.0f, 0, 1, 0, 0.0f, 0.0f};   mVertices.push_back(v12);   // Bottom-left
-    Vertex v13{-5.0f, 0.0f, -5.0f,  0, 1, 0, 0.0f, 1.0f};   mVertices.push_back(v13);    // Top-left
-    Vertex v14{-5.0f, 5.0f, -5.0f,  0, 1, 0, 1.0f, 1.0f};   mVertices.push_back(v14);    // Top-right
+    Vertex v13{-5.0f, 0.0f, -5.0f,  0, 1, 0, 0.0f, 0.0f};   mVertices.push_back(v13);    // Top-left
+    Vertex v14{-5.0f, 5.0f, -5.0f,  0, 1, 0, 0.0f, 0.0f};   mVertices.push_back(v14);    // Top-right
 
     Vertex v15{-5.0f, 0.0f, -10.0f, 0, 1, 0, 0.0f, 0.0f};   mVertices.push_back(v15);   // Bottom-left
-    Vertex v16{-5.0f, 5.0f, -10.0f, 0, 1, 0, 1.0f, 0.0f};   mVertices.push_back(v16);   // Bottom-right
-    Vertex v17{-5.0f, 5.0f, -5.0f,  0, 1, 0, 1.0f, 1.0f};   mVertices.push_back(v17);    // Top-right
+    Vertex v16{-5.0f, 5.0f, -10.0f, 0, 1, 0, 0.0f, 0.0f};   mVertices.push_back(v16);   // Bottom-right
+    Vertex v17{-5.0f, 5.0f, -5.0f,  0, 1, 0, 0.0f, 0.0f};   mVertices.push_back(v17);    // Top-right
 
     // Front wall-left
     Vertex v18{-10.0f, 0.0f, -5.0f, 0, 1, 0, 0.0f, 0.0f};   mVertices.push_back(v18);
@@ -57,6 +58,30 @@ House::House()
     Vertex v33{-8.0f, 4.0f, -5.0f, 0, 1, 0, 0.0f, 0.0f};   mVertices.push_back(v33);
     Vertex v34{-8.0f, 5.0f, -5.0f, 0, 1, 0, 0.0f, 0.0f};   mVertices.push_back(v34);
     Vertex v35{-7.0f, 5.0f, -5.0f, 0, 1, 0, 0.0f, 0.0f};   mVertices.push_back(v35);
+
+    // Finds normal for each triangle (smooth shading)
+    for(int i = 0; i <= mVertices.size() - 2; i += 3)
+    {
+        QVector3D normal;
+
+        if (i % 6 != 0 && i != 0)
+            normal = VisualObject::getVectorNormal(mVertices[i], mVertices[i + 2], mVertices[i + 1]);
+        else
+            normal = VisualObject::getVectorNormal(mVertices[i], mVertices[i + 1], mVertices[i + 2]);
+
+        mVertices[i].m_normal[0] = normal.x();
+        mVertices[i].m_normal[1] = normal.y();
+        mVertices[i].m_normal[2] = normal.z();
+
+        mVertices[i + 1].m_normal[0] = normal.x();
+        mVertices[i + 1].m_normal[1] = normal.y();
+        mVertices[i + 1].m_normal[2] = normal.z();
+
+        mVertices[i + 2].m_normal[0] = normal.x();
+        mVertices[i + 2].m_normal[1] = normal.y();
+        mVertices[i + 2].m_normal[2] = normal.z();
+    }
+
 
     mMatrix.setToIdentity();
 }

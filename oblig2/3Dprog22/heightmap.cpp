@@ -96,10 +96,6 @@ float HeightMap::getHeight(QVector2D p) // Returns barycentric coordinates when 
         v1 = {mVertices[i + 1].m_xyz[0], mVertices[i + 1].m_xyz[1], mVertices[i + 1].m_xyz[2]};
         v2 = {mVertices[i + 2].m_xyz[0], mVertices[i + 2].m_xyz[1], mVertices[i + 2].m_xyz[2]};
 
-        //v0 = {mVertices[i].m_xyz[0], };
-        //v1 = {mVertices[i + 1].m_xyz};
-        //v2 = {mVertices[i + 2].m_xyz};
-
         // Finds barycentric coordinates
         baryc3D = getBarycCoordinate(QVector2D(v0[0], v0[2]), QVector2D(v1[0], v1[2]), QVector2D(v2[0], v2[2]), p);
 
