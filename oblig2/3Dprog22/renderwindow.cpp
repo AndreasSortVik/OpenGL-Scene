@@ -89,14 +89,14 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
 
 
     // Trophies: tObject(x, y, z, radius)
-    trophies.push_back(new tObject(0.5f, 0.0f, -0.5f, 0.2));
-    trophies.push_back(new tObject(4.5f, 0.0f, 2.3f, 0.2));
-    trophies.push_back(new tObject(-2.5f, 0.0f, 1.0f, 0.2));
-    trophies.push_back(new tObject(3.2f, 0.0f, -2.5f, 0.2));
-    trophies.push_back(new tObject(-2.0f, 0.0f, 2.0f, 0.2));
-    trophies.push_back(new tObject(1.5f, 0.0f, 3.5f, 0.2));
-    trophies.push_back(new tObject(-3.0f, 0.0f, -2.3f, 0.2));
-    trophies.push_back(new tObject(-7.0f, 0.0f, -8.0f, 0.2));
+    trophies.push_back(new tObject(0.5f, -1.0f, -0.5f, 0.2));
+    trophies.push_back(new tObject(4.5f, -1.0f, 2.3f, 0.2));
+    trophies.push_back(new tObject(-2.5f, -1.0f, 1.0f, 0.2));
+    trophies.push_back(new tObject(3.2f, -1.0f, -2.5f, 0.2));
+    trophies.push_back(new tObject(-2.0f, -1.0f, 2.0f, 0.2));
+    trophies.push_back(new tObject(1.5f, -1.0f, 3.5f, 0.2));
+    trophies.push_back(new tObject(-3.0f, -1.0f, -2.3f, 0.2));
+    trophies.push_back(new tObject(-7.0f, -1.0f, -8.0f, 0.2));
 
     // Add trophy objects into mObjects, and sets render style to visible
     for (int i = 0; i < trophies.size(); i++) {
@@ -195,7 +195,7 @@ void RenderWindow::init()
     {
         if ((*it) == door)
             (*it)->init(mMatrixUniform1);
-        else if ((*it) == house)
+        else if ((*it) == house || (*it) == heightMap)
             (*it)->init(mMatrixUniform2);
         else
             (*it)->init(mMatrixUniform0);
@@ -215,8 +215,12 @@ void RenderWindow::render()
     mCamera.init();
     mCamera.perspective(60, 4.0/3.0, 0.1, 1000.0);
     //mCamera.lookAt(QVector3D{6.0f, 2.5f, 6.0f}, QVector3D{0.0f, 0.0f, 0.0f}, QVector3D{0.0f, 1.0f, 0.0f});
-    //mCamera.lookAt(cameraEye, mia->getPosition(), cameraUp);
-    mCamera.lookAt(cameraEye, QVector3D(-7.5, 2.0f, -10), cameraUp);
+
+    // Camera follows player if camera is outside house, but does not follow player if the camera is inside the house
+    if (!cameraSwitched)
+        mCamera.lookAt(cameraEye, mia->getPosition(), cameraUp);
+    else if (cameraSwitched)
+        mCamera.lookAt(cameraEye, QVector3D(-7.5, 2.0f, -10), cameraUp);
 
     mTimeStart.restart(); //restart FPS clock
     mContext->makeCurrent(this); //must be called every frame (every time mContext->swapBuffers is called)
@@ -235,7 +239,7 @@ void RenderWindow::render()
         // Draw
         for (auto it = mObjects.begin(); it != mObjects.end(); it++)
         {
-            if ((*it) == door || (*it) == house) // Does not render ground nor door objects with plainshader
+            if ((*it) == door || (*it) == house || (*it) == heightMap) // Does not render ground nor door objects with plainshader
                 continue;
 
             (*it)->draw();
@@ -253,21 +257,12 @@ void RenderWindow::render()
         glUniform3f(mCameraPositionUniform, cameraEye.x(), cameraEye.y(), cameraEye.z());
         glUniform3f(mLightColorUniform, light->mLightColor.x(), light->mLightColor.y(), light->mLightColor.z());
         glUniform1f(mSpecularStrengthUniform, light->mSpecularStrength);
-        //Texture
+        //Texture for phong
         //glUniform1i(mTextureUniform2, 0);
-
-//        // Draw (is able to draw all objects)
-//        for (auto it = mObjects.begin(); it != mObjects.end(); it++)
-//        {
-//            if ((*it) == door) // Does not render door objects with phongshader
-//                continue;
-
-//            (*it)->draw();
-//        }
 
         // Draw
         house->draw();
-        //heightMap->draw();
+        heightMap->draw();
 
         // What shader to use (textureshader)
         glUseProgram(mShaderProgram[1]->getProgram());
@@ -334,9 +329,6 @@ void RenderWindow::render()
             mia->setPosition3D(QVector3D(mia->getPosition().x(), playerHeight, mia->getPosition().z()));
         }
 
-        // Light source follows player
-        light->setPosition3D(QVector3D(mia->getPosition().x(), mia->getPosition().y() + 2.5f, mia->getPosition().z()));
-
         // Checks for collisions
         for (int i = 0; i < trophies.size(); i++)
         {
@@ -352,18 +344,6 @@ void RenderWindow::render()
         }
 
     }
-
-    // Light source movement
-//    if (light)
-//    {
-//        long secElapsed = mTimeStart.nsecsElapsed();
-
-//        float light_x = 5.5f * sin(secElapsed);
-//        float light_y = 2.5f;
-//        float light_z = 5.5f * cos(secElapsed);
-
-//        light->setPosition3D(QVector3D(light_x, light_y, light_z));
-//    }
 
     //AI movement
     if (npc) {

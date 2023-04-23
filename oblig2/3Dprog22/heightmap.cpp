@@ -7,39 +7,58 @@ HeightMap::HeightMap(const char* ImagePath)
 {
     unsigned char* data = stbi_load(ImagePath, &width, &height, &bitDepth, 1);
 
-        float res = 1;
-        float x{};
-        float y{};
-        float z{};
-        float heightMultiplier{ 0.05f }; // 0.05f
-        float yPlacement{ -7.0f }; // -5.0f
-        int vert{};
+    float res = 1;
+    float x{};
+    float y{};
+    float z{};
+    float heightMultiplier{ 0.05f }; // 0.05f
+    float yPlacement{ -7.0f }; // -5.0f
+    int vert{};
 
-        //width /= 2;
-        //height /= 2;
+    //width /= 2;
+    //height /= 2;
 
-        for (x = -height / 2; x < (height / 2); x += res) {
-            for (z = -height / 2; z < (width / 2); z += res) {
+    for (x = -height / 2; x < (height / 2); x += res) {
+        for (z = -height / 2; z < (width / 2); z += res) {
 
-                y = (float)data[vert];
-                mVertices.push_back(Vertex{x, y * heightMultiplier + yPlacement, z, 0.0f, y, 1.0f});
+            y = (float)data[vert];
+            mVertices.push_back(Vertex{x, y * heightMultiplier + yPlacement, z, 0.0f, y, 1.0f});
 
-                y = (float)data[vert+width];
-                mVertices.push_back(Vertex{ x + res, y * heightMultiplier + yPlacement, z, 0.0f, y, 1.0f});
+            y = (float)data[vert+width];
+            mVertices.push_back(Vertex{ x + res, y * heightMultiplier + yPlacement, z, 0.0f, y, 1.0f});
 
-                y = (float)data[vert+1];
-                mVertices.push_back(Vertex{ x, y * heightMultiplier + yPlacement, z + res, 0.0f, y, 1.0f});
-                mVertices.push_back(Vertex{ x, y * heightMultiplier + yPlacement, z + res, 0.0f, y, 1.0f});
+            y = (float)data[vert+1];
+            mVertices.push_back(Vertex{ x, y * heightMultiplier + yPlacement, z + res, 0.0f, y, 1.0f});
+            mVertices.push_back(Vertex{ x, y * heightMultiplier + yPlacement, z + res, 0.0f, y, 1.0f});
 
-                y = (float)data[vert+width];
-                mVertices.push_back(Vertex{ x + res, y * heightMultiplier + yPlacement, z, 0.0f, y, 1.0f});
+            y = (float)data[vert+width];
+            mVertices.push_back(Vertex{ x + res, y * heightMultiplier + yPlacement, z, 0.0f, y, 1.0f});
 
-                y = (float)data[vert+1+width];
-                mVertices.push_back(Vertex{ x + res, y * heightMultiplier + yPlacement, z + res, 0.0f, y, 1.0f});
+            y = (float)data[vert+1+width];
+            mVertices.push_back(Vertex{ x + res, y * heightMultiplier + yPlacement, z + res, 0.0f, y, 1.0f});
 
-                vert++;
-            }
+            vert++;
         }
+    }
+
+    for(int i = 0; i <= mVertices.size() - 2; i += 3)
+    {
+        QVector3D normal = VisualObject::getVectorNormal(mVertices[i], mVertices[i + 2], mVertices[i + 1]);
+
+        mVertices[i].m_normal[0] = normal.x();
+        mVertices[i].m_normal[1] = normal.y();
+        mVertices[i].m_normal[2] = normal.z();
+
+        mVertices[i + 1].m_normal[0] = normal.x();
+        mVertices[i + 1].m_normal[1] = normal.y();
+        mVertices[i + 1].m_normal[2] = normal.z();
+
+        mVertices[i + 2].m_normal[0] = normal.x();
+        mVertices[i + 2].m_normal[1] = normal.y();
+        mVertices[i + 2].m_normal[2] = normal.z();
+    }
+
+    mMatrix.setToIdentity();
 }
 
 void HeightMap::init(GLint matrixUniform)
