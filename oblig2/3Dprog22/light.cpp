@@ -65,3 +65,8 @@ void Light::draw()
     glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
     glBindVertexArray(0);
 }
+
+QVector3D Light::getPosition()
+{
+    return mMatrix.column(3).toVector3D();
+}

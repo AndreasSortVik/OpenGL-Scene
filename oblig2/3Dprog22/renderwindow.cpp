@@ -230,6 +230,9 @@ void RenderWindow::render()
     //clear the screen for each redraw
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    light->setPosition3D(QVector3D(mia->getPosition().x(), (mia->getPosition().y() + 3.0f), mia->getPosition().z()));
+    mLogger->logText("Player position: " + std::to_string(mia->getPosition().x()) + ", " + std::to_string(mia->getPosition().y()) + ", " + std::to_string(mia->getPosition().z()));
+
     {
         // What shader to use (plainshader)
         glUseProgram(mShaderProgram[0]->getProgram());
@@ -258,7 +261,9 @@ void RenderWindow::render()
         glUniform3f(mLightColorUniform, light->mLightColor.x(), light->mLightColor.y(), light->mLightColor.z());
         glUniform1f(mSpecularStrengthUniform, light->mSpecularStrength);
         //Texture for phong
-        //glUniform1i(mTextureUniform2, 0);
+        glUniform1i(mTextureUniform2, 0);
+
+        mLogger->logText("Light position: " + std::to_string(light->getPosition().x()) + ", " + std::to_string(light->getPosition().y()) + ", " + std::to_string(light->getPosition().z()));
 
         // Draw
         house->draw();
@@ -294,40 +299,21 @@ void RenderWindow::render()
     if (mia)
     {
         float playerHeight = 0.0f;
-
         QVector2D playerPos = {mia->getPosition().x(), mia->getPosition().z()};
+
+        playerHeight = heightMap->getHeight(playerPos);
+        mLogger->logText("Player height" + std::to_string(playerHeight));
+
         if (controller.moveLeft)
-        {
-            playerHeight = heightMap->getHeight(playerPos);
-            mLogger->logText("Player height" + std::to_string(playerHeight));
-
             mia->move(-0.1f, 0.0f, 0.0f); // (-0.1f, 0.0f, 0.0f)
-            mia->setPosition3D(QVector3D(mia->getPosition().x(), playerHeight, mia->getPosition().z()));
-        }
         if (controller.moveRight)
-        {
-            playerHeight = heightMap->getHeight(playerPos);
-            mLogger->logText("Player height" + std::to_string(playerHeight));
-
             mia->move(0.1f, 0.0f, 0.0f); // (0.1f, 0.0f, 0.0f)
-            mia->setPosition3D(QVector3D(mia->getPosition().x(), playerHeight, mia->getPosition().z()));
-        }
         if (controller.moveUp)
-        {
-            playerHeight = heightMap->getHeight(playerPos);
-            mLogger->logText("Player height" + std::to_string(playerHeight));
-
             mia->move(0.0f, 0.0f, -0.1f); // (0.0f, 0.0f, -0.1f)
-            mia->setPosition3D(QVector3D(mia->getPosition().x(), playerHeight, mia->getPosition().z()));
-        }
         if (controller.moveDown)
-        {
-            playerHeight = heightMap->getHeight(playerPos);
-            mLogger->logText("Player height" + std::to_string(playerHeight));
-
             mia->move(0.0f, 0.0f, 0.1f); // (0.0f, 0.0f, 0.1f)
-            mia->setPosition3D(QVector3D(mia->getPosition().x(), playerHeight, mia->getPosition().z()));
-        }
+
+        mia->setPosition3D(QVector3D(mia->getPosition().x(), playerHeight, mia->getPosition().z()));
 
         // Checks for collisions
         for (int i = 0; i < trophies.size(); i++)
@@ -519,7 +505,7 @@ void RenderWindow::setupPhongShader(int shaderIndex)
     mSpecularExponentUniform = glGetUniformLocation( mShaderProgram[shaderIndex]->getProgram(), "specularExponent" );
     mLightStrengthUniform = glGetUniformLocation( mShaderProgram[shaderIndex]->getProgram(), "lightStrength" );
     mCameraPositionUniform = glGetUniformLocation( mShaderProgram[shaderIndex]->getProgram(), "cameraPosition" );
-//    mTextureUniform2 = glGetUniformLocation(mShaderProgram[shaderIndex]->getProgram(), "textureSampler");
+    mTextureUniform2 = glGetUniformLocation(mShaderProgram[shaderIndex]->getProgram(), "textureSampler");
 }
 
 //Event sent from Qt when program receives a keyPress

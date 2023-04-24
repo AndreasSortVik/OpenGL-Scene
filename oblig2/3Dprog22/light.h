@@ -21,6 +21,8 @@ public:
     GLfloat mSpecularStrength{0.9f};
     GLint mSpecularExponent{4};
 
+    QVector3D getPosition() override;
+
 private:
     float mx, my, mz, mr;
 };

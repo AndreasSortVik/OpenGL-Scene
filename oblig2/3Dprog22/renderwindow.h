@@ -124,7 +124,7 @@ private:
     GLint mSpecularStrengthUniform;
     GLint mSpecularExponentUniform;
     GLint mLightStrengthUniform;
-//    GLint mTextureUniform2;
+    GLint mTextureUniform2;
 
 protected:
     //The QWindow that we inherit from have these functions to capture
