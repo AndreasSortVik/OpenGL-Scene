@@ -16,7 +16,7 @@ public:
     QVector3D mAmbientColor{0.3f, 0.3f, 0.3f};  //Grey
 
     GLfloat mLightStrength{0.7f};
-    QVector3D mLightColor{0.9f, 0.9f, 0.3f};    //Yellow
+    QVector3D mLightColor{0.3f, 0.9f, 0.3f};    //Green
 
     GLfloat mSpecularStrength{0.9f};
     GLint mSpecularExponent{4};

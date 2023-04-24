@@ -2,12 +2,21 @@
 
 Plane::Plane()
 {
-    Vertex v0(-15, 0, 15, 0, 0, 1);     mVertices.push_back(v0);
-    Vertex v1(-15, 0, -15, 0, 0, 1);    mVertices.push_back(v1);
-    Vertex v2(15, 0, 15, 0, 0, 1);      mVertices.push_back(v2);
-    mVertices.push_back(v0);
-    mVertices.push_back(v1);
-    Vertex v3(15, 0, -15, 0, 0, 1);     mVertices.push_back(v3);
+    //Vertices
+    //     v    x     y      z     r  g  b
+    Vertex v0(-15.0f, 0.0f, 15.0f, 0, 0, 1);    // Front-left
+    Vertex v1(-15.0f, 0.0f,-15.0f, 0, 0, 1);    // Back-left
+    Vertex v2( 15.0f, 0.0f, 15.0f, 0, 0, 1);    // Front-right
+    Vertex v3( 15.0f, 0.0f,-15.0f, 0, 0, 1);    // Back-right
+
+    // Triangle 1
+    mVertices.push_back(v0);    // Front-left
+    mVertices.push_back(v1);    // Back-left
+    mVertices.push_back(v2);    // Front-right
+    // Triangle 2
+    mVertices.push_back(v0);    // Front-left
+    mVertices.push_back(v1);    // Back-left
+    mVertices.push_back(v3);    // Back-right
 
     mMatrix.setToIdentity();
 }

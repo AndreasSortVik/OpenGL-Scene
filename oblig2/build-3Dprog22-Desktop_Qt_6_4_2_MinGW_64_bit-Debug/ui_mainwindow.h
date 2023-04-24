@@ -70,7 +70,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName("menuBar");
-        menuBar->setGeometry(QRect(0, 0, 1396, 20));
+        menuBar->setGeometry(QRect(0, 0, 1396, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName("menuFile");
         MainWindow->setMenuBar(menuBar);
@@ -175,7 +175,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "OpenGL in Qt is great fun!", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Commiting Qt", nullptr));
         fileExit->setText(QCoreApplication::translate("MainWindow", "Exit", nullptr));
 #if QT_CONFIG(shortcut)
         fileExit->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+Q", nullptr));

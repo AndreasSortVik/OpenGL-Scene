@@ -81,7 +81,7 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
     mObjects.push_back(npc);
     npc_Curve = false;
 
-    heightMap = new HeightMap((char*)("../3Dprog22/heightmap.png"));
+    heightMap = new HeightMap((char*)("../3Dprog22/heightmap.png"));    // If heightMap doesn't show, write your own directory path to the heightmap.png image
     //heightMap = new HeightMap((char*)("C:/Users/kmstr/Documents/GitHub/OpenGL-Scene/oblig2/3Dprog22/heightmap.png")); // Obs! Write your own directory to the image
     //heightMap = new HeightMap((char*)("C:/Users/wohal/source/repos/OpenGL-Scene/oblig2/3Dprog22/heightmap.png"));
     heightMap->setPosition3D(QVector3D{0.0f, 0.0f,0.0f});
