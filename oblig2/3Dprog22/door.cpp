@@ -4,17 +4,17 @@ Door::Door()
 {
     //     v  x    y    z     r g b     mVertices
     // Door
-    Vertex v1{-8.0f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
-    Vertex v2{-7.0f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f};
-    Vertex v3{-7.0f, 4.0f, -5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f};
-    Vertex v4{-8.0f, 4.0f, -5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+    Vertex v0{-8.0f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    Vertex v1{-7.0f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f};
+    Vertex v2{-7.0f, 4.0f, -5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f};
+    Vertex v3{-8.0f, 4.0f, -5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
 
-    mVertices.push_back(v1); // Bottom left
-    mVertices.push_back(v2); // Bottom right
-    mVertices.push_back(v3); // Top right
-    mVertices.push_back(v1); // Bottom left
-    mVertices.push_back(v4); // Top left
-    mVertices.push_back(v3); // Top right
+    mVertices.push_back(v0); // Bottom left
+    mVertices.push_back(v1); // Bottom right
+    mVertices.push_back(v2); // Top right
+    mVertices.push_back(v0); // Bottom left
+    mVertices.push_back(v3); // Top left
+    mVertices.push_back(v2); // Top right
 
     mMatrix.setToIdentity();
 }
