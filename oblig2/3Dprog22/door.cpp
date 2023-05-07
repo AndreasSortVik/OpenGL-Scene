@@ -4,8 +4,8 @@ Door::Door()
 {
     //     v  x    y    z     r g b     mVertices
     // Door
-    Vertex v0{-8.0f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
-    Vertex v1{-7.0f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f};
+    Vertex v0{-8.0f, -2.0f, -5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    Vertex v1{-7.0f, -2.0f, -5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f};
     Vertex v2{-7.0f, 4.0f, -5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f};
     Vertex v3{-8.0f, 4.0f, -5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
 

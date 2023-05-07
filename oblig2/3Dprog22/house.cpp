@@ -5,19 +5,19 @@ House::House()
 
     // Vertices
     //     v    x     y      z      r  g  b  u     v
-    Vertex v0{-10.0f, 0.0f, -10.0f, 0, 1, 0, 0.0f, 0.0f};   // Back-bottom-left Vertex
-    Vertex v1{ -5.0f, 0.0f, -10.0f, 0, 1, 0, 0.0f, 0.0f};   // Back-bottom-right Vertex
+    Vertex v0{-10.0f, -2.0f, -10.0f, 0, 1, 0, 0.0f, 0.0f};   // Back-bottom-left Vertex
+    Vertex v1{ -5.0f, -2.0f, -10.0f, 0, 1, 0, 0.0f, 0.0f};   // Back-bottom-right Vertex
     Vertex v2{ -5.0f, 5.0f, -10.0f, 0, 1, 0, 0.0f, 0.0f};   // Back-top-right Vertex
     Vertex v3{-10.0f, 5.0f, -10.0f, 0, 1, 0, 0.0f, 0.0f};   // Back-top-left Vertex
-    Vertex v4{-10.0f, 0.0f,  -5.0f, 0, 1, 0, 0.0f, 0.0f};   // Front-bottom-left Vertex
+    Vertex v4{-10.0f, -2.0f,  -5.0f, 0, 1, 0, 0.0f, 0.0f};   // Front-bottom-left Vertex
     Vertex v5{-10.0f, 5.0f,  -5.0f, 0, 1, 0, 0.0f, 0.0f};   // Front-top-left Vertex
-    Vertex v6{-5.0f, 0.0f,  -5.0f, 0, 1, 0, 0.0f, 0.0f};   // Front-bottom-right Vertex
+    Vertex v6{-5.0f, -2.0f,  -5.0f, 0, 1, 0, 0.0f, 0.0f};   // Front-bottom-right Vertex
     Vertex v7{-5.0f, 5.0f,  -5.0f, 0, 1, 0, 0.0f, 0.0f};   // Front-top-right Vertex
     //OBS! Required Front Wall Vertices
     //     v    x     y      z     r  g  b  u     v
-    Vertex v8{-8.0f, 0.0f, -5.0f, 0, 1, 0, 0.0f, 0.0f};    // Middle-bottom-left Vertex
+    Vertex v8{-8.0f, -2.0f, -5.0f, 0, 1, 0, 0.0f, 0.0f};    // Middle-bottom-left Vertex
     Vertex v9{-8.0f, 5.0f, -5.0f, 0, 1, 0, 0.0f, 0.0f};    // Middle-top-left Vertex
-    Vertex v10{-7.0f, 0.0f, -5.0f, 0, 1, 0, 0.0f, 0.0f};    // Middle-bottom-right Vertex
+    Vertex v10{-7.0f, -2.0f, -5.0f, 0, 1, 0, 0.0f, 0.0f};    // Middle-bottom-right Vertex
     Vertex v11{-7.0f, 5.0f, -5.0f, 0, 1, 0, 0.0f, 0.0f};    // Middle-top-right Vertex
     Vertex v12{-8.0f, 4.0f, -5.0f, 0, 1, 0, 0.0f, 0.0f};    // Middle-middle-left Vertex
     Vertex v13{-7.0f, 4.0f, -5.0f, 0, 1, 0, 0.0f, 0.0f};    // Middle-middle-right Vertex

@@ -9,6 +9,7 @@
 #include <QDebug>
 
 #include <string>
+#include <vector>
 
 #include "curve.h"
 #include "light.h"
@@ -319,14 +320,9 @@ void RenderWindow::render()
         for (int i = 0; i < trophies.size(); i++)
         {
             float distance = trophies[i]->getPosition().distanceToPoint(mia->getPosition());
-            //float distance = mia->getPosition().distanceToPoint(trophies[i]->getPosition());
-            //mLogger->logText("Object " + std::to_string(i) + ": " + std::to_string(distance));
 
             if (distance < mia->getRadius() + trophies[i]->getRadius())
-            {
-                //mLogger->logText("Collisions!!!");
                 trophies[i]->setRenderStyle(1);
-            }
         }
 
     }
